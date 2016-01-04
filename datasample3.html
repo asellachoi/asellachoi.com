@@ -1,0 +1,143 @@
+<html>
+	<head>
+		<title> sample data1</title>
+		<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" />   -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/0.71/jquery.csv-0.71.min.js"></script>
+		<script type="text/javascript" src = "d3/d3.v3.min.js"> 
+
+		<!--<script type="text/javascript" > -->
+		    $(document).ready(function() {
+			    // The event listener for the file upload
+			    document.getElementById('txtFileUpload').addEventListener('change', InitChart, false);			    
+			    //document.getElementById('txtFileUpload').addEventListener('change', readFile, false);			    
+/*
+			    // Method that checks that the browser supports the HTML5 File API
+			    function browserSupportFileUpload() {
+			        var isCompatible = false;
+			        if (window.File && window.FileReader && window.FileList && window.Blob) {
+			        	isCompatible = true;
+			        }
+			        return isCompatible;
+			    }
+
+			    // Method that reads and processes the selected file
+			    function readFile(evt) {
+				    if (!browserSupportFileUpload()) {
+				        alert('The File APIs are not fully supported in this browser!');
+			        } else {
+			            var data = null;
+			            var file = evt.target.files[0];
+			            
+			            printTable(file);   
+			            //InitChart(file);
+			        }
+				};
+
+				function printTable(file) {
+					var reader = new FileReader();
+					reader.readAsText(file);
+					reader.onload = function(event){
+						var csv = event.target.result;
+						var data = $.csv.toArrays(csv);
+						var html = '';
+						for(var row in data) {
+							html += '<tr>\r\n';
+							for(var item in data[row]) {
+							  html += '<td>' + data[row][item] + '</td>\r\n';
+							}
+							html += '</tr>\r\n';
+						}
+						InitChart();
+						$('#contents').html(html);
+					};
+					reader.onerror = function(){ alert('Unable to read ' + file.fileName); };
+				}
+
+*/
+				function InitChart() {
+
+					  var barData = [{
+					    'x': 1,
+					    'y': 5
+					  }, {
+					    'x': 20,
+					    'y': 20
+					  }, {
+					    'x': 40,
+					    'y': 10
+					  }, {
+					    'x': 60,
+					    'y': 40
+					  }, {
+					    'x': 80,
+					    'y': 5
+					  }, {
+					    'x': 100,
+					    'y': 60
+					  }];
+
+					  var vis = d3.select('#visualisation'),
+					    WIDTH = 1000,
+					    HEIGHT = 500,
+					    MARGINS = {
+					      top: 20,
+					      right: 20,
+					      bottom: 20,
+					      left: 50
+					    },
+					    xRange = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([d3.min(barData, function(d) {
+					        return d.x;
+					      }),
+					      d3.max(barData, function (d) {
+					        return d.x;
+					      })
+					    ]),
+
+					    yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([d3.min(barData, function(d) {
+					        return d.y;
+					      }),
+					      d3.max(barData, function (d) {
+					        return d.y;
+					      })
+					    ]),
+
+					    xAxis = d3.svg.axis()
+					      .scale(xRange)
+					      .tickSize(5)
+					      .tickSubdivide(true),
+
+					    yAxis = d3.svg.axis()
+					      .scale(yRange)
+					      .tickSize(5)
+					      .orient("left")
+					      .tickSubdivide(true);
+
+					  vis.append('svg:g')
+					    .attr('class', 'x axis')
+					    .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
+					    .call(xAxis);
+
+					  vis.append('svg:g')
+					    .attr('class', 'y axis')
+					    .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
+					    .call(yAxis);
+					};
+			});
+		</script>
+	</head>
+
+	<body>
+		<h1>sample data 1</h1>
+
+		<div id="dvImportSegments" class="fileupload ">
+	    	<fieldset>
+	        	<legend>Upload your CSV File</legend>
+	           	<input type="file" name="File Upload" id="txtFileUpload" accept=".csv" />
+		   </fieldset>
+		</div>
+
+		<table id=contents style="width:100%; height:400px;" border>
+		</table>
+	</body>
+</html>

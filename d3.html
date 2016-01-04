@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang = "EN">
+	<head>
+		<meta charset = "utf-8">
+		<title>D3 Page Template</title>
+		<script type="text/javascript" src = "d3/d3.v3.min.js"></script>
+		<link rel="stylesheet" href="css/d3sample.css" type="text/css">
+	</head>
+	<body>
+		<script type="text/javascript">
+			var dataset = [10,10,15,20,25,20];
+			var d_set = [2,3,4,5,6];
+			d3.select("body").selectAll("p")
+			.data(d_set)
+			.enter()
+			.append("p")
+			.style("color","red")
+			.text(function(d){return "New paragraph!!" + d;});
+			d3.select("body").selectAll("div").data(dataset).enter().append("div").style("height",function(d){return d + "px";}).attr("class","bar");
+		</script>
+		<div style = "display: inline-block;
+		width : 20px;
+		height : 75px;
+		background-color : red;"></div>
+		<div class = "bar"></div>
+	</body>
+</html>
